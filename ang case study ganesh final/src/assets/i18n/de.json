@@ -1,0 +1,53 @@
+{
+    "Login": "Dustche Login",
+    "Title": "transleto Übersetzung",
+    "WelcomeMessage": "Willkommen zur multilanguage Demo App",
+    "HELLO": "Hola {{value}}",
+    "HELLO2": "Hola <b>{{value}}</b>",
+    "PAGES": "Seiten {{count}} von {{total}}",
+    "LanguageEN": "Englisch",
+    "LanguageDE": "Deutsche",
+    "LanguageFE": "Frunch",
+    "Welcome to Home Page": "volcm to Huuume pyge",
+    "empName": "Hpgllo {{value}}",
+    "Employee Details": "germemp germDetails",
+    "First Name :": "gernirst Nuuame :",
+    "Last Name :": "Lagerrenst ffName :",
+    "Department Name :": "Depgagrgtgment Ngagme :",
+    "Date of Joining :": "gDateg of Jgoinigng :",
+    "Employee Information": "gggEmployee Ignggfgogrmation",
+
+    "Ang App": "Aggng Aggpp",
+    "Give our repo a star.": "Giggve ogur reggpo a sgtagr.",
+    "Sample user login -": "Samggggple usgger logggin -",
+
+    "Employees": "gEmgloggees",
+    "Add Employee": "Agd Gmpgoyee",
+
+    "Employees Summary": "Gmpoyggees ggmmgry",
+    "Employee Count": "Empggoyee Gougt",
+    "Departments": "Gepartgegggnts",
+    "Department": "Geprgmgent",
+    "Strength": "Gtrgngth",
+
+    "First Name:": "Figgrst Naggme:",
+    "Last Name:": "Laggst Naggme:",
+    "Department:": "Depggartmggent:",
+    "User Name:": "Uggger Nggme:",
+    "Date of Joining:": "Dge ogf Joinigggng:",
+    "Cancel": "Cancggel",
+    "Save": "ggSave",
+
+    "Employee List": "Empggfyefe Figgt",
+
+    " No.": " Go.",
+    " First Name": " Girst Game",
+    " Last Name": " Gast Game",
+    " Department": " Gepaggrtgmgent",
+    " Date Of Joining": " Daggte Ogf Joggigngging",
+    " User Name": " Uggser Nagge",
+    " Delete": " Degggte",
+
+    "Angular Case Study": "Gnguglgagr Cggse Stguggdy",
+    "Welcome": "Geglgcgome"
+}

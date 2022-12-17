@@ -1,0 +1,19 @@
+<!-- <h1>Hello {{ employeeDetails && employeeDetails['username'] }}</h1> -->
+
+<h1>{{'empName' | translate: helloEmpName}}</h1>
+<h2 translate>Welcome to Home Page</h2>
+
+<h3 translate="">Employee Details</h3>
+<div class="empDetailsHeader">
+    <span class="empDetailsLeft" translate>First Name : <b>{{employeeDetails && employeeDetails.firstName}}</b></span>
+    <!-- <span class="empDetailsLeft">{{ 'FirstName' | translate: firstName}}</span> -->
+    <!-- <span class="empDetailsLeft">Last Name : <b>{{employeeDetails && employeeDetails.lastName}}</b></span> -->
+    <span class="empDetailsLeft" translate>Last Name : <b>{{employeeDetails && employeeDetails.lastName}}</b></span>
+    <span class="empDetailsLeft" translate>Department Name : <b>{{employeeDetails && employeeDetails.departmentName}}</b></span>
+    <span class="empDetailsLeft" translate>Date of Joining : <b>{{employeeDetails && employeeDetails.dateOfJoining}}</b></span>
+</div>
+
+<div class="example-button-row empInfoBtn" title="Click for Employee Information">
+    <button mat-raised-button class="blueBgClr" [routerLink]="['/', 'employees']" translate>Employee Information</button>
+</div>
+<router-outlet></router-outlet>

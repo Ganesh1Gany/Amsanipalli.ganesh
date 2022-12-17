@@ -1,0 +1,12 @@
+<h1 translate>Employees</h1>
+<div *ngIf="editList" class="example-button-row" class="addEmp">
+    <button (click)="addEmployee()" mat-raised-button class="addEmpBtn blueBgClr" translate>Add Employee</button>
+</div>
+
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" (selectedTabChange)="selectedTabChanged($event)">
+    <mat-tab title="First" [label]="'Employee List'"></mat-tab>
+    <mat-tab title="Second" [label]="'Employee Summary'"></mat-tab>
+</mat-tab-group>
+
+<router-outlet></router-outlet>
+<employee *ngIf="isAddEmployee" [type]="'Add'"></employee>

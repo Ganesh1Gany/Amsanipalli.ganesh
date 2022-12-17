@@ -1,0 +1,53 @@
+{
+    "Login": "english login",
+    "Title": "Select Translation",
+    "WelcomeMessage": "Welcome to the international demo application",
+    "HELLO": "Hello {{value}}",
+    "HELLO2": "Hello <b>{{value}}</b>",
+    "PAGES": "pages {{count}} of {{total}}",
+    "LanguageEN": "English",
+    "LanguageDE": "German",
+    "LanguageFE": "French",
+    "Welcome to Home Page": "Welcome to Home Page",
+    "empName": "Hello {{value}}",
+    "Employee Details": "Employee Details",
+    "First Name :": "First Name :",
+    "Last Name :": "Last Name :",
+    "Department Name :": "Department Name :",
+    "Date of Joining :": "Date of Joining :",
+    "Employee Information": "Employee Information",
+
+    "Ang App": "Ang App",
+    "Give our repo a star.": "Give our repo a star.",
+    "Sample user login -": "Sample user login -",
+
+    "Employees": "Employees",
+    "Add Employee": "Add Employee",
+
+    "Employees Summary": "Employees Summary",
+    "Employee Count": "Employee Count",
+    "Departments": "Departments",
+    "Department": "Department",
+    "Strength": "Strength",
+
+    "First Name:": "First Name:",
+    "Last Name:": "Last Name:",
+    "Department:": "Department:",
+    "User Name:": "User Name:",
+    "Date of Joining:": "Date of Joining:",
+    "Cancel": "Cancel",
+    "Save": "Save",
+
+    "Employee List": "Employee List",
+
+    " No.": " No.",
+    " First Name": " First Name",
+    " Last Name": " Last Name",
+    " Department": " Department",
+    " Date Of Joining": " Date Of Joining",
+    " User Name": " User Name",
+    " Delete": " Delete",
+
+    "Angular Case Study": "Angular Case Study",
+    "Welcome": "Welcome"
+}  

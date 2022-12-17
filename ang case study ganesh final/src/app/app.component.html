@@ -1,0 +1,45 @@
+<div class="toolbar blueBgClr" role="banner">
+  <img width="40" alt="Angular Logo"
+  src={{logoPath}}/>
+  <span translate>Angular Case Study</span>
+  <div class="spacer"></div>
+  <span class="userName" *ngIf="currentUser.username" translate>&nbsp;&nbsp;&nbsp;Welcome {{currentUser.username}}</span>
+  <mat-icon *ngIf="showLogout" (click)="logout()" title="Logout" class="logoutIcon">exit_to_app</mat-icon>
+</div>
+
+<footer class="custom-footer" translate>
+  &nbsp;Ang App&nbsp;
+  <a rel="noopener" translate> Give our repo a star.
+    <div class="github-star-badge">
+      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path d="M0 0h24v24H0z" fill="none" />
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+      </svg>
+      Star
+    </div>
+  </a>
+  <a rel="noopener">
+    <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+      <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="#1976d2" />
+      <path d="M0 0h24v24H0z" fill="none" />
+    </svg>
+  </a>
+  <span class="sampleUserCred">Sample user login - (username - <b>sampleuser</b>, password - <b>sampleuser@1</b>)</span>
+</footer>
+
+<div class="container">
+  <mat-card>
+    <mat-card-title translate>Title</mat-card-title>
+    <button mat-raised-button color="primary" (click)="switchLanguage('en')">
+      <span translate>LanguageEN</span>
+    </button>
+    <button mat-raised-button color="accent" (click)="switchLanguage('de')">
+      <span translate>LanguageDE</span>
+    </button>
+    <button mat-raised-button color="primary" (click)="switchLanguage('fe')">
+      <span translate>LanguageFE</span>
+    </button>
+  </mat-card>
+</div>
+
+<router-outlet></router-outlet>

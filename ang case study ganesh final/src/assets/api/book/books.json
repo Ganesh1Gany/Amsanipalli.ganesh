@@ -1,0 +1,32 @@
+[
+    {
+        "id": "1",
+        "name": "Book 1",
+        "author": "Author A",
+        "price": 100
+    },
+    {
+        "id": "2",
+        "name": "Book 2",
+        "author": "Author B",
+        "price": 200
+    },
+    {
+        "id": "3",
+        "name": "Book 3",
+        "author": "Author B",
+        "price": 300
+    },
+    {
+        "id": "4",
+        "name": "Book 4",
+        "author": "Author A",
+        "price": 400
+    },
+    {
+        "id": "5",
+        "name": "Book 5",
+        "author": "Author A",
+        "price": 500
+    }
+]

@@ -1,0 +1,33 @@
+.mat-form-field {
+  width: 100%;
+}
+
+mat-card-title,
+mat-card-content {
+  display: flex;
+  justify-content: center;
+}
+
+.error {
+  padding: 16px;
+  color: white;
+  background-color: red;
+}
+
+.button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+mat-card {
+  background-color: lightgray;
+}
+
+.form-group {
+  margin: 5px 0px 5px 0px;
+}
+
+.form-group > div {
+    padding: 5px;
+    display: inline;
+}

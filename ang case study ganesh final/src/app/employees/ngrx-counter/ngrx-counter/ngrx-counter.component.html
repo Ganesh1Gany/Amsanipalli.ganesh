@@ -1,0 +1,13 @@
+<div class="main-container">
+    <mat-card>
+        <mat-card-title>NgRx Counter</mat-card-title>
+        <div>
+            <button (click)="incr()">+</button>
+            <button (click)="desc()">-</button>
+            <button (click)="reset()">C</button>
+        </div>
+    </mat-card>
+    <mat-card class="counter-container">
+        <div class="counter">{{ counter$ | async }}</div>
+    </mat-card>
+</div>

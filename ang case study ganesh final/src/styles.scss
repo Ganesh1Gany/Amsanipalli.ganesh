@@ -1,0 +1,41 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+ul, li, a {
+    text-decoration: none !important;
+    list-style-type: none;
+}
+
+.cursorPointer {
+    cursor: pointer;
+}
+
+.txtAlignCtr {
+    text-align: center;
+}
+
+.txtAlignRt {
+    text-align: right;
+}
+
+.txtAlignLt {
+    text-align: left;
+}
+
+.returnToHome {
+    padding-top: 8px;
+}
+
+.blueBgClr {
+    background-color: #1976d2;
+}
+
+.redClr {
+    color: red;
+}
+
+.bgClr {
+    background: lightgreen !important;
+}

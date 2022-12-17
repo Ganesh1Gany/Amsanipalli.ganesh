@@ -1,0 +1,85 @@
+<mat-card *ngIf="editEmployee">
+    <mat-card-title>{{cardTitle}}</mat-card-title>
+    <mat-card-content>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div>
+                <div style="display: inline;">
+                    <mat-form-field boxStyle fxFlex="130px">
+                        <label class="ruf-label ruf-label-align-left ruf-label-padding-small" fxFlex="80px"
+                            translate>First Name:</label>
+                        <input type="text" matInput name="firstName" formControlName="firstName" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }" />
+                        <div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
+                            <div *ngIf="f['firstName'].errors['required']">First Name is required</div>
+                        </div>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div>
+                <div style="display: inline;">
+                    <mat-form-field boxStyle fxFlex="130px">
+                        <label class="ruf-label ruf-label-align-left ruf-label-padding-small" fxFlex="80px"
+                            translate>Last Name:</label>
+                        <input type="text" matInput formControlName="lastName" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }" />
+                        <div *ngIf="submitted && f['lastName'].errors" class="invalid-feedback">
+                            <div *ngIf="f['lastName'].errors['required']">Last Name is required</div>
+                        </div>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div>
+                <div style="display: inline;">
+                    <mat-form-field boxStyle fxFlex="130px">
+                        <label class="ruf-label ruf-label-align-left ruf-label-padding-small" fxFlex="80px"
+                            translate>Department Name:</label>
+                        <input type="text" matInput formControlName="departmentName" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f['departmentName'].errors }" />
+                        <div *ngIf="submitted && f['departmentName'].errors" class="invalid-feedback">
+                            <div *ngIf="f['departmentName'].errors['required']">Department Name is required</div>
+                        </div>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div>
+                <div style="display: inline;">
+                    <mat-form-field boxStyle fxFlex="130px">
+                        <label class="ruf-label ruf-label-align-left ruf-label-padding-small" fxFlex="80px"
+                            translate>User Name:</label>
+                        <input type="text" matInput formControlName="username" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f['username'].errors }" />
+                        <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+                            <div *ngIf="f['username'].errors['required']">User Name is required</div>
+                        </div>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div>
+                <div style="display: inline;">
+                    <mat-form-field boxStyle fxFlex="130px">
+                        <label class="ruf-label ruf-label-align-left ruf-label-padding-small" fxFlex="80px"
+                            translate>Date of Joining:</label>
+                        <input type="date" matInput formControlName="dateOfJoining" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f['dateOfJoining'].errors }" />
+                        <div *ngIf="submitted && f['dateOfJoining'].errors" class="invalid-feedback">
+                            <div *ngIf="f['dateOfJoining'].errors['required']">Date Of Joining is required</div>
+                        </div>
+                    </mat-form-field>
+                </div>
+            </div>
+            <button (click)="cancel()" mat-button style="float: 'right'; background-color: #1976d2;"
+                [disabled]="loading" class="btn btn-primary" translate>
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Cancel
+            </button>
+            <button (click)="save()" mat-button style="float: 'right'; background-color: #1976d2; margin-right: 5px;"
+                [disabled]="loading || loginForm.invalid" class="btn btn-primary" translate>
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Save
+            </button>
+            <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+        </form>
+    </mat-card-content>
+    <h2 style="color: red;" *ngIf="userNotFound">User Not Found..!!</h2>
+</mat-card>
+<div style="height: 40px;"></div>

@@ -1,0 +1,16 @@
+<div class="simple-snackbar" rufId>
+    <div class="snackbar-icon-margin" rufId>
+        <mat-icon rufId class="fis-icon-md" fisIcon="information-solid" [color]="color == 'none' ? 'error' : color">
+        </mat-icon>
+    </div>
+    <div class="snackbar-text-margin" rufId>
+        {{data}}
+    </div>
+
+    <div class="snackbar-icon-margin" rufId *ngIf="color == 'error' || color == 'warn'"
+        style="margin-top: 11px;right: 0;position: absolute;z-index: 1000;">
+        <mat-icon rufId class="fis-icon-md deleteIcon" title="close" fisIcon="close" color="error" (click)="close()">
+        </mat-icon>
+    </div>
+
+</div>

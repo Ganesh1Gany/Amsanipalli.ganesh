@@ -1,0 +1,57 @@
+:host {
+    display: flex;
+}
+
+.example-pizza-party {
+    color: hotpink;
+}
+
+.simple-snackbar {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    opacity: 1;
+  }
+  .example-section {
+    height: auto;
+  }
+  
+  .example-margin {
+    margin: 10px;
+  }
+  
+  .demo-snackbar-solid-icon {
+    font-family: 'fisfont-solid' !important;
+  }
+  
+  .snackbar-icon-margin {
+    margin-right: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .snackbar-text-margin {
+   margin: 15px 0px;
+  }
+  
+  .snackbar-button-margin {
+   margin-left: auto;
+   button {
+     margin-left: 10px;
+   }
+  }
+  
+  
+  [dir='rtl'] {
+    .snackbar-icon-margin {
+      margin-left: 15px;
+      margin-right: auto;
+    }
+  
+    .snackbar-button-margin {
+      margin-left: auto;
+      button {
+        margin-left: auto;
+        margin-right: 10px;
+      }
+     }
+  }

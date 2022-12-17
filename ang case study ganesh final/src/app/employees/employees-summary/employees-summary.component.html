@@ -1,0 +1,32 @@
+<hr>
+<h1 translate>Employees Summary</h1>
+<hr>
+<div class="flex-container">
+    <mat-card>
+        <mat-card-title translate>Employee Count</mat-card-title>
+        <div>
+            <h2>{{ employeeCount$ | async }}</h2>
+        </div>
+    </mat-card>
+    <mat-card>
+        <mat-card-title translate>Departments</mat-card-title>
+        <div>
+            <table class="txtAlignCtr">
+                <thead>
+                    <th translate>Department</th>
+                    <th translate>Strength</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let i of employeeTotals.totalEmpCountByDep">
+                        <td>{{i.department}}</td>
+                        <td>{{i.length}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </mat-card>
+</div>
+<button title="return to home" class="mat-button primary txtAlignRt returnToHome"><a
+        [routerLink]="['/home']">
+        <mat-icon>keyboard_return</mat-icon>
+    </a></button>

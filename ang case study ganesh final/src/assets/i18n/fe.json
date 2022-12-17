@@ -1,0 +1,53 @@
+{
+    "Login": "frgloosh login",
+    "Title": "freeeon langeto",
+    "WelcomeMessage": "frelcome to the fenternl demo application",
+    "HELLO": "Hello {{value}}",
+    "HELLO2": "Hello <b>{{value}}</b>",
+    "PAGES": "pages {{count}} of {{total}}",
+    "LanguageEN": "Englishooo",
+    "LanguageDE": "Germanooo",
+    "LanguageFE": "Fronchooo",
+    "Welcome to Home Page": "vfecolcm to fetuume ffyge",
+    "empName": "ftttllo {{value}}",
+    "Employee Details": "Emfenchployee Dfrenchetails",
+    "First Name :": "Fifrenrst Ngferncame :",
+    "Last Name :": "frenrast Namfenge :",
+    "Department Name :": "Depahgffffrtment Namffe :",
+    "Date of Joining :": "Daffte off Joffining :",
+    "Employee Information": "Emfpflfofyee Inffffformation",
+
+    "Ang App": "Anffg Affpp",
+    "Give our repo a star.": "Giffve offur rffepo a stfffar.",
+    "Sample user login -": "Samfffple usffer logffin -",
+
+    "Employees": "frenyeeress",
+    "Add Employee": "Frd Fmpffyfe",
+
+    "Employees Summary": "Fmplfyfees Sfmmfffary",
+    "Employee Count": "Emplfffee Cofft",
+    "Departments": "Departfffts",
+    "Department": "Departffnt",
+    "Strength": "Strfffth",
+
+    "First Name:": "Firffst Nffmf:",
+    "Last Name:": "Fffast Namffe:",
+    "Department:": "Fepaffrtmenfft:",
+    "User Name:": "Ufffser Namffe:",
+    "Date of Joining:": "ffDate fof FfJoininffg:",
+    "Cancel": "ffCanfffcel",
+    "Save": "Saffve",
+
+    "Employee List": "FFmplfyfe Fisffft",
+
+    " No.": " Fo.",
+    " First Name": " Figffrst Naffme",
+    " Last Name": " Lafffst Namfe",
+    " Department": " Depaffffrtment",
+    " Date Of Joining": " Datfffe fOfFoinfffing",
+    " User Name": " Usffr fame",
+    " Delete": " Deffffe",
+
+    "Angular Case Study": "Fnguflfar Cafsfe Stfufdfy",
+    "Welcome": "Felfcfofmfe"
+}
