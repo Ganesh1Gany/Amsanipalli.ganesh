@@ -1,4 +1,4 @@
-# CustomerSetup
+# Angular Case Study Ganesh Amsanipalli
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0.
 
