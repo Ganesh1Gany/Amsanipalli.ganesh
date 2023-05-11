@@ -1,0 +1,25 @@
+{
+  "migrations": [
+    {
+      "version": "15.0.0-0",
+      "description": "Updates @ruf/widgets to v15.0.0 (req RUF 5.7.0)",
+      "factory": "./ng-update/index#updateToV15",
+      "package": "@ruf/widgets",
+      "name": "migration-v15"
+    },
+    {
+      "version": "16.0.0-0",
+      "description": "Updates @ruf/widgets to v16.0.0 (req RUF 5.8.0)",
+      "factory": "./ng-update/index#updateToV16",
+      "package": "@ruf/widgets",
+      "name": "migration-v16"
+    },
+    {
+      "version": "17.0.0-0",
+      "description": "Updates @ruf/widgets to v17.0.0 (req RUF 5.8.0)",
+      "factory": "./ng-update/index#updateToV17",
+      "package": "@ruf/widgets",
+      "name": "migration-v17"
+    }
+  ]
+}

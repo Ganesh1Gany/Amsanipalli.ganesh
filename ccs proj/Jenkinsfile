@@ -1,0 +1,211 @@
+#! /usr/bin/env groovy
+
+@Library('cm-cicd-pipeline-library@multikube-azure') _
+
+def branchName = "${env.BRANCH_NAME}"
+def jobname = "${env.JOB_NAME}"
+def buildno = "${env.BUILD_NUMBER}"
+def deployment = "snapshot"
+def label = "customer-setup-ui-${branchName}".replaceAll('-', '_').replaceAll('/', '_').replaceAll(' ', '_') + "_label"
+def cloudId = 'ds-cicd'
+def namespace = 'ds-cicd'
+def workingdir = "/home/jenkins"
+def mavenImg = "ds-docker-dev.docker.fis.dev/maven:3.6-jdk-8"
+def environment = "qc2"
+
+def images = [jnlp:"ds-docker-dev.docker.fis.dev/base-images/base-jenkins-client:1.0.4",maven:mavenImg, mavenCpuLmt:"2", mavenMemLmt:"4Gi"]
+
+properties([disableConcurrentBuilds(),buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5'))])
+
+milestone()
+try {
+
+	timestamps {
+      	//images << [node:"node:14",nodeCpuLmt:"1400m", nodeMemLmt:"4Gi"]
+        slaveTemplate = new PodTemplates(cloudId, namespace, label, images, workingdir, this)
+        echo "Container images: ${images}"
+        echo "running agents on node with label ${label}"
+        slaveTemplate.BuilderTemplate {
+            node(slaveTemplate.podlabel) {
+                stage("Checkout") {
+                    try {
+                        cleanWs()
+                        checkout scm
+						}
+                    catch (e) 	{
+                        currentBuild.result = "ABORTED"
+                        def latestcommitHash = sh(script: "git rev-parse origin/${branchName}", returnStdout: true).trim()
+                        println "Latest commit hash: ${latestcommitHash}"
+                        error('!!!! Git commit hash code differs cannot continue with build !!!!')
+								}
+                }
+
+
+      container('maven') {
+              stage ("Build")
+        {
+                    milestone()
+                        if (readMavenPom().version.contains("SNAPSHOT")) {
+                            deployment = "snapshot"
+                        } else {
+                            deployment = "release"
+                        }
+                            sh "rm -rf /home/jenkins/.cache/"
+                            sh "mkdir -p /home/jenkins/.cache/cypress"
+                          withEnv(["CYPRESS_CACHE_FOLDER=/home/jenkins/.cache/cypress/","NPM_CONFIG_USERCONFIG=/data/.npm/config/.npmrc","npm_config_cache=/data/.npm"])
+                        {
+                            if( "dev" == environment)
+                            {
+                                sh "mvn -V -U -B -f pom.xml clean deploy -Denv=dev"
+                            }    
+                            else if ( "qc1" == environment)
+                            {
+                                sh "mvn -V -U -B -f pom.xml clean deploy -Denv=qc1"
+                            }
+                            else if ("qc2" == environment)
+                            {
+                                sh "mvn -V -U -B -f pom.xml clean deploy -Denv=qc2"
+							}
+                          	else if ("uat" == environment)
+                            {
+                                sh "mvn -V -U -B -f pom.xml clean deploy -Denv=uat"
+							}
+                          	else if ("prod" == environment)
+                            {
+                                sh "mvn -V -U -B -f pom.xml clean deploy -Denv=prod"
+							}
+						}
+         }
+      /* stage ("BlackDuckScan")
+         {
+                     sh "curl https://sig-repo.synopsys.com/artifactory/bds-integrations-release/com/synopsys/integration/synopsys-detect/7.0.0/synopsys-detect-7.0.0.jar -o /home/jenkins/synopsys-detect-7.0.0.jar"
+                     withCredentials([string(credentialsId: 'black-duck-token', variable: 'blackducktoken')]) {
+                     sh """
+                     java -jar /home/jenkins/synopsys-detect-7.0.0.jar \
+                     --detect.source.path=${WORKSPACE} \
+                     --detect.project.name='Customer Setup_10000513' \
+                     --detect.project.version.name=UI.2023.Q2 \
+                     --logging.level.com.blackducksoftware.integration=DEBUG \
+                     --blackduck.url=https://fis.blackducksoftware.com/ \
+                     --blackduck.api.token=${blackducktoken}
+                     """
+                    sh "rm -rf /home/jenkins/synopsys-detect-7.0.0.jar"
+                        }
+          } */
+        /* stage("VeracodeScan") {
+                          echo 'In Veracode stage'
+                          withCredentials([usernamePassword(credentialsId: "veracode-scan-upload-id",
+                          usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            veracode applicationName: "Customer Setup API", 
+                            canFailJob: true, 
+                            criticality: 'VeryHigh', 
+                            fileNamePattern: '', 
+                            pHost: "10.7.199.135", 
+                            pPassword: '', 
+                            pPort: "8080", 
+                            pUser: '', 
+                            replacementPattern: '', 
+                            sandboxName: "CSR-UI", 
+                            scanExcludesPattern: '', 
+                            scanIncludesPattern: '', 
+                            scanName: 'CUSTSETUP_UI_${JOB_BASE_NAME}_${BUILD_ID}', 
+                            teams: '', uploadExcludesPattern: '', 
+                            uploadIncludesPattern: '', 
+                            useProxy: true,
+                            useIDkey: true,
+                            vid: "${USERNAME}", vkey: "${PASSWORD}",
+                            vpassword: '', vuser: ''
+	                	}
+	            	} */
+                }
+            }
+        }
+    }
+
+   node('ansible') {
+        if("dev" == environment){
+            stage("Deploy to DEV") {
+
+                milestone()
+                checkout scm
+
+                ansiblePlaybook(
+                    playbook: "playbook-dev.yml",
+                    inventory: "hosts",
+                    limit: "DEV2",
+                    credentialsId: "4b23ad30-ff47-492f-9eef-faa8a19466be",
+                    vaultCredentialsId: "1a3f9998-340e-43d1-bf10-02fa7442cad1",
+                    extraVars: [
+                        deployment: deployment,
+                        jobname: branchName,
+                        buildno: buildno,
+						env: environment
+                    ]
+                )
+            }
+        }
+
+        if("qc1" == environment){
+            stage("Deploy to QC1(Kendra Environment) ") {
+
+                milestone()
+                sh 'ansible --version && ansible-galaxy --version'
+                checkout scm
+
+                ansiblePlaybook(
+                    playbook: "playbook.yml",
+                    inventory: "hosts",
+                    limit: "QC1",
+                    credentialsId: "4b23ad30-ff47-492f-9eef-faa8a19466be",
+                    vaultCredentialsId: "1a3f9998-340e-43d1-bf10-02fa7442cad1",
+                    extraVars: [
+                        deployment: deployment,
+                        jobname: branchName,
+                        buildno: buildno,
+						env: environment
+                    ]
+
+                )
+            }
+        }
+
+        if("qc2" == environment) {
+            stage("Deploy to QC2(SCRUM Environment)") {
+
+                milestone()
+                sh 'ansible --version && ansible-galaxy --version'
+                checkout scm
+
+                ansiblePlaybook(
+                    playbook: "playbook.yml",
+                    inventory: "hosts",
+                    limit: "QC2",
+                    credentialsId: "4b23ad30-ff47-492f-9eef-faa8a19466be",
+                    vaultCredentialsId: "1a3f9998-340e-43d1-bf10-02fa7442cad1",
+                    extraVars: [
+                        deployment: deployment,
+                        jobname: branchName,
+                        buildno: buildno,
+						env: environment
+                    ]
+
+                )
+            }
+        }
+    }
+
+
+}
+
+catch(e) {
+    currentBuild.result = "FAILED"
+    echo 'BUILD FAILED'
+    throw e
+}
+finally {
+    buildNotification {
+        emailId = "sathishkumar.sankar@fisglobal.com"
+        echo "Finshed!"
+    }
+}
+

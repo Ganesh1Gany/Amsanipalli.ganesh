@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.fisglobal.customersetup</groupId>
+	<artifactId>customersetupui</artifactId>
+	<version>23.2.2-SNAPSHOT</version>
+
+	<parent>
+		<groupId>com.fisglobal</groupId>
+		<artifactId>fis-mvn-parent</artifactId>
+		<version>1.1.0</version>
+	</parent>
+	<name>customersetupui</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.11.2</version>
+
+				<configuration>
+					<nodeVersion>v14.15.4</nodeVersion>
+					<npmVersion>6.14.10</npmVersion>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>install node and npm</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+					</execution>
+                   <!--	<execution>
+						<id>npm clean</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+                     	<configuration>
+							<arguments>cache clean force</arguments>
+						</configuration>
+					</execution> -->
+					<execution>
+						<id>npm install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>npm run build</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>run build:${env}</arguments>
+
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>local</id>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<finalName>${project.artifactId}</finalName>
+							<ignoreDirFormatExtensions>true</ignoreDirFormatExtensions>
+							<tarLongFileMode>posix</tarLongFileMode>
+							<descriptors>
+								<descriptor>/assembly/config.xml</descriptor>
+							</descriptors>
+						</configuration>
+						<phase>package</phase>
+					</execution>
+
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<profiles>
+		<profile>
+			<activation>
+				<property>
+					<name>fabricdocker</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>io.fabric8</groupId>
+						<artifactId>docker-maven-plugin</artifactId>
+						<version>0.33.0</version>
+						<extensions>true</extensions>
+						<configuration>
+							<verbose>true</verbose>
+							<images>
+								<image>
+									<name>${project.artifactId}</name>
+									<build>
+										<from>nginx:latest</from>
+										<assembly>
+											<targetDir>/usr/share/nginx/html</targetDir>
+											<inline>
+												<includeBaseDirectory>false</includeBaseDirectory>
+												<fileSets>
+													<fileSet>
+														<directory>${project.basedir}/dist/apps/customersetup</directory>
+														<outputDirectory>/</outputDirectory>
+														<includes>
+															<include>*.*</include>
+														</includes>
+													</fileSet>
+												</fileSets>
+											</inline>
+										</assembly>
+									</build>
+								</image>
+							</images>
+							<layers>
+								<enabled>true</enabled>
+								<includeLayerTools>true</includeLayerTools>
+							</layers>
+						</configuration>
+						<executions>
+							<execution>
+								<id>build</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>build</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

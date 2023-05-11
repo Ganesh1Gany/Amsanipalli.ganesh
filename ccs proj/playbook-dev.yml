@@ -1,0 +1,119 @@
+---
+
+- hosts: DEV
+  gather_facts: no
+  remote_user: dswebadmin
+
+  tasks:
+    - set_fact: artifactory_url=https://artifactory.fis.dev/artifactory/ds-maven-release-local
+      when: deployment == "release"
+    - set_fact: artifactory_url=https://artifactory.fis.dev/artifactory/ds-maven-snapshot-local
+      when: deployment == "snapshot"
+
+    - name: Create backup Directory
+      shell: mkdir -p /webapps/SCMSupport/Backup/{{jobname}}-{{buildno}}
+
+    - name: Create deploy Directory
+      shell: mkdir -p /webapps/SCMSupport/Release/{{jobname}}-{{buildno}}
+
+    - name: Download latest config
+      maven_artifact:
+        group_id: com.fisglobal.customersetup
+        artifact_id: customersetupui
+        extension: tar
+        classifier: "{{env}}"
+        repository_url: "{{ artifactory_url }}"
+        username: ds-cicd-svc
+        password: "{{ artifactory_password }}"
+        dest: /webapps/SCMSupport/Release/{{jobname}}-{{buildno}}/customersetupui-{{env}}.tar
+      vars:
+        artifactory_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          37353563316635613765376232313837356231323563353736343834613633653238363334356439
+          3436396232643032306566323266333966373161363038320a646134353734616232346238616366
+          62333138333433646535656330656161616137393463316132373366656331633965363731373765
+          6433623030363938380a363834343731353338633635616434333235356430353866323266643036
+          6161
+      environment:
+        https_proxy: http://10.7.199.135:8080
+
+    - name: Stop customersetup UI web server application
+      shell: /webapps/Apache/customersetupui_dev/conf/stop.sh
+
+    - name: compress config files for backup
+      shell: tar -zcvf /webapps/SCMSupport/Backup/{{jobname}}-{{buildno}}/{{env}}.tar.gz /webapps/Apache/customersetupui_dev/htdocs/
+      
+    - name: delete the old files
+      shell: rm -rf /webapps/Apache/customersetupui_dev/htdocs/*
+
+    - name: Changing permissions config
+      shell: chmod -R 755 /webapps/SCMSupport/Release/{{jobname}}-{{buildno}}/customersetupui-{{env}}.tar
+
+    - name: move the new config file to conf location
+      shell: tar xvf /webapps/SCMSupport/Release/{{jobname}}-{{buildno}}/customersetupui-{{env}}.tar -C /webapps/Apache/customersetupui_dev/htdocs/
+
+    - name: Changing permissions conf
+      shell: chmod -R 755 /webapps/Apache/customersetupui_dev/htdocs*
+
+    - name: Start customersetup UI  application
+      shell: /webapps/Apache/customersetupui_dev/conf/start.sh
+
+
+- hosts: DEV2
+  gather_facts: no
+  remote_user: dswebadmin
+
+  tasks:
+    - set_fact: artifactory_url=https://artifactory.fis.dev/artifactory/ds-maven-release-local
+      when: deployment == "release"
+    - set_fact: artifactory_url=https://artifactory.fis.dev/artifactory/ds-maven-snapshot-local
+      when: deployment == "snapshot"
+
+    - name: Create backup Directory
+      shell: mkdir -p /webapps/SCMSupport/Backup/{{jobname}}-{{buildno}}
+
+    - name: Create deploy Directory
+      shell: mkdir -p /webapps/SCMSupport/Release/{{jobname}}-{{buildno}}
+
+    - name: Download latest config
+      maven_artifact:
+        group_id: com.fisglobal.customersetup
+        artifact_id: customersetupui
+        version: 23.2.2-SNAPSHOT
+        extension: tar
+        classifier: "{{ env }}"
+        repository_url: "{{ artifactory_url }}"
+        username: ds-cicd-svc
+        password: "{{ artifactory_password }}"
+        dest: /webapps/SCMSupport/Release/{{jobname}}-{{buildno}}/customersetupui-{{env}}.tar
+      vars:
+        artifactory_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          37353563316635613765376232313837356231323563353736343834613633653238363334356439
+          3436396232643032306566323266333966373161363038320a646134353734616232346238616366
+          62333138333433646535656330656161616137393463316132373366656331633965363731373765
+          6433623030363938380a363834343731353338633635616434333235356430353866323266643036
+          6161
+      environment:
+        https_proxy: http://10.7.199.135:8080
+
+    - name: Stop customersetup UI web server application
+      shell: /webapps/nginx/myapps/conf/run stop
+
+    - name: compress config files for backup
+      shell: tar -zcvf /webapps/SCMSupport/Backup/{{jobname}}-{{buildno}}/{{env}}.tar.gz /webapps/nginx/myapps/htdocs/
+      
+    - name: delete the old files
+      shell: rm -rf /webapps/nginx/myapps/htdocs/*
+
+    - name: Changing permissions config
+      shell: chmod -R 755 /webapps/SCMSupport/Release/{{jobname}}-{{buildno}}/customersetupui-{{env}}.tar
+
+    - name: move the new config file to conf location
+      shell: tar xvf /webapps/SCMSupport/Release/{{jobname}}-{{buildno}}/customersetupui-{{env}}.tar -C /webapps/nginx/myapps/htdocs/
+
+    - name: Changing permissions conf
+      shell: chmod -R 755 /webapps/nginx/myapps/htdocs/*
+
+    - name: Start customersetup UI  application
+      shell: /webapps/nginx/myapps/conf/run start

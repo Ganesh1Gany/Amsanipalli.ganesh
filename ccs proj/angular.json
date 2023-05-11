@@ -1,0 +1,228 @@
+{
+  "version": 1,
+  "projects": {
+    "customersetup": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/customersetup",
+      "sourceRoot": "apps/customersetup/src",
+      "prefix": "customer-setup-ui",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/customersetup",
+            "index": "apps/customersetup/src/index.html",
+            "main": "apps/customersetup/src/main.ts",
+            "polyfills": "apps/customersetup/src/polyfills.ts",
+            "tsConfig": "apps/customersetup/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/customersetup/src/favicon.ico",
+              "apps/customersetup/src/assets"
+            ],
+            "styles": [
+              "apps/customersetup/src/styles.scss",
+              "./node_modules/@ruf/fis-ux-assets/styles/icon_font.css",
+              "./node_modules/@ruf/fis-ux-assets/styles/source_sans_pro_font.css",
+              "./node_modules/@ruf/fis-ux-assets/styles/titillium_web_font.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/customersetup/src/environments/environment.ts",
+                  "with": "apps/customersetup/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            },
+            "local": {
+              "optimization": false,
+              "sourceMap": true
+            },
+            "dev": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/customersetup/src/environments/environment.ts",
+                  "with": "apps/customersetup/src/environments/environment.dev.ts"
+                }
+              ],
+              "optimization": {
+            	"scripts": true,
+            	"styles": {
+              		"minify": false,
+              		"inlineCritical": true
+            		},
+            		"fonts": true
+              },
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            },
+            "qc1": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/customersetup/src/environments/environment.ts",
+                  "with": "apps/customersetup/src/environments/environment.qc1.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            },
+            "qc2": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/customersetup/src/environments/environment.ts",
+                  "with": "apps/customersetup/src/environments/environment.qc2.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            },
+            "uat": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/customersetup/src/environments/environment.ts",
+                  "with": "apps/customersetup/src/environments/environment.uat.ts"
+                }
+              ],
+              "optimization": {
+            	"scripts": true,
+            	"styles": {
+              		"minify": false,
+              		"inlineCritical": true
+            		},
+            		"fonts": true
+              },
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "customersetup:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "customersetup:build:production"
+            },
+            "local": {
+              "browserTarget": "customersetup:build:local"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "customersetup:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/customersetup/tsconfig.app.json",
+              "apps/customersetup/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/customersetup/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/customersetup/jest.config.js",
+            "tsConfig": "apps/customersetup/tsconfig.spec.json",
+            "setupFile": "apps/customersetup/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "customersetup-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
+      "root": "apps/customersetup-e2e",
+      "sourceRoot": "apps/customersetup-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/customersetup-e2e/cypress.json",
+            "tsConfig": "apps/customersetup-e2e/tsconfig.e2e.json",
+            "devServerTarget": "customersetup:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "customersetup:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/customersetup-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/customersetup-e2e/**"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@ruf/schematics",
+    "analytics": false
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "customersetup"
+}
